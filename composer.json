@@ -3,6 +3,7 @@
 	{
 		"codegyre/robo": "*",
 		"brad-jones/robo-tasks": "*",
-		"gears/asset": "*"
+		"gears/asset": "*",
+		"patchwork/jsqueeze": "*"
 	}
 }

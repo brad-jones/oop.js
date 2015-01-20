@@ -36,7 +36,7 @@ class RoboFile extends Brads\Robo\Tasks
 			$parts = explode('.', $current_version);
 			$last = array_pop($parts);
 			$next_version = implode('.', $parts).'.'.$last+1;
-			
+
 			$this->taskExec('git tag '.$this->askDefault('Please set the new version number.', $next_version))->run();
 
 			$this->taskExec('git push --tags')->run();
