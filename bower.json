@@ -1,0 +1,19 @@
+{
+  "name": "oop.js",
+  "main": "oop.js",
+  "version": "0.1",
+  "homepage": "https://github.com/brad-jones/oop.js",
+  "authors": [
+    "Brad Jones <brad@bjc.id.au>"
+  ],
+  "description": "Classic Object Oriented Programming for JavaScript Engines",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "class",
+    "classical",
+    "inheritance"
+  ],
+  "license": "MIT"
+}
