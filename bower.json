@@ -1,6 +1,6 @@
 {
   "name": "oop.js",
-  "main": "oop.js",
+  "main": "./dist/oop.min.js",
   "version": "0.1",
   "homepage": "https://github.com/brad-jones/oop.js",
   "authors": [
