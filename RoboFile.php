@@ -32,6 +32,8 @@ class RoboFile extends Brads\Robo\Tasks
 
 		if ($this->askYesNo('Do you want to publish a new version?'))
 		{
+			$this->test();
+			
 			$current_version = exec('git tag');
 			$parts = explode('.', $current_version);
 			$last = array_pop($parts);
@@ -48,14 +50,14 @@ class RoboFile extends Brads\Robo\Tasks
 	 */
 	public function test()
 	{
-		// TODO: At some point my plan is to refactor
+		// TODO: At some point my plan is to re-factor
 		// all this Sauce Labs stuff into a new Robo Task
 
 		// Our sauce account details
 		$sauce_username = 'brad-jones';
 		$sauce_access_key = '85d1380a-f45d-483e-bfe0-4c99a6f4065d';
 
-		// Make them aviable to sauce_connect
+		// Make them available to sauce_connect
 		putenv("SAUCE_USERNAME=$sauce_username");
 		putenv("SAUCE_ACCESS_KEY=$sauce_access_key");
 
@@ -83,10 +85,10 @@ class RoboFile extends Brads\Robo\Tasks
 		// Bail out if it didn't connect
 		if (!$sauce_connected)
 		{
-			$this->say('Failed to connect!');
 			$s = proc_get_status($process);
 			posix_kill($s['pid'], SIGKILL);
 			proc_close($process);
+			throw new Exception('Failed to connect!');
 			exit;
 		}
 
@@ -118,6 +120,8 @@ class RoboFile extends Brads\Robo\Tasks
 			]
 		])]);
 
+		$overall_pass_or_fail = true;
+
 		// Loop through the jobs ids
 		foreach ($response->json()['js tests'] as $job_id)
 		{
@@ -146,8 +150,15 @@ class RoboFile extends Brads\Robo\Tasks
 			$result = $response->json()['js tests'][0]['result'];
 
 			// Did we pass or fail?
-			if ($result['failed'] == 0) $status = 'PASSED!';
-			else $status = 'FAILED!';
+			if ($result['failed'] == 0)
+			{
+				$status = 'PASSED!';
+			}
+			else
+			{
+				$status = 'FAILED!';
+				$overall_pass_or_fail = false;
+			}
 
 			// Output the result of the job
 			$this->say('Platform: '.$platform.' - '.$status);
@@ -170,5 +181,7 @@ class RoboFile extends Brads\Robo\Tasks
 		$s = proc_get_status($process);
 		posix_kill($s['pid'], SIGKILL);
 		proc_close($process);
+
+		if (!$overall_pass_or_fail) throw new Exception('Some tests failed!');
 	}
 }
