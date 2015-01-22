@@ -1,4 +1,4 @@
-Oop.js - A Class Construct for the Browser
+Oop.js - Javascript Class Construct
 ================================================================================
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/oopjs.svg)](https://saucelabs.com/u/oopjs)
 
