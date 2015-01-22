@@ -6,7 +6,7 @@
   "authors": [
     "Brad Jones <brad@bjc.id.au>"
   ],
-  "description": "Classic Object Oriented Programming for JavaScript Engines",
+  "description": "Classic Object Oriented Programming for Browsers",
   "moduleType": [
     "globals"
   ],
@@ -15,5 +15,8 @@
     "classical",
     "inheritance"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "qunit": "~1.17.1"
+  }
 }

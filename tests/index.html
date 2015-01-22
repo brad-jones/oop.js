@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Qunit</title>
+		<link rel="stylesheet" href="../vendor/bower/qunit/qunit/qunit.css">
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+		<script src="../vendor/bower/qunit/qunit/qunit.js"></script>
+		<script>
+			
+			var log = []; QUnit.log(function (details){ log.push(details); });
+
+			QUnit.done(function (test_results)
+			{
+				var tests = [];
+
+				for(var i = 0, len = log.length; i < len; i++)
+				{
+					tests.push(log[i]);
+				}
+
+				test_results.tests = tests;
+
+				window.global_test_results = test_results;
+			});
+
+		</script>
+		<script src="../src/oop.js"></script>
+		<script src="OopTest.js"></script>
+	</body>
+</html>

@@ -1,9 +1,12 @@
 {
 	"require-dev":
 	{
+		"phpunit/phpunit": "4.*",
+		"sauce/sausage": "0.15.*",
+		"sauce/connect": "3.*",
 		"codegyre/robo": "*",
 		"brad-jones/robo-tasks": "*",
 		"gears/asset": "*",
-		"patchwork/jsqueeze": "*"
+		"guzzlehttp/guzzle": "~5.0"
 	}
 }
