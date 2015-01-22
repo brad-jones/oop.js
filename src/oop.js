@@ -569,7 +569,7 @@
 			// NOTE: We have to use `init` for the pseudo constructor method
 			// name because of IE otherwise I was using constructor which
 			// seemed more semantic too me.
-			this.init.apply(this, arguments);
+			if (this.init) this.init.apply(this, arguments);
 		};
 
 		// Publish it
