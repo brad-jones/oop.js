@@ -1,11 +1,8 @@
+#!/usr/bin/env php
 <?php
 
-// Make sure our local composer autoloader is installed,
-// even if this is run from a globally installed copy of robo.
+// Install Composer
 require_once(__DIR__.'/vendor/autoload.php');
-
-// PHP throws warnings if we don't explicitly set the timezone
-date_default_timezone_set('UTC');
 
 /**
  * This is project's console commands configuration for Robo task runner.
@@ -14,9 +11,6 @@ date_default_timezone_set('UTC');
  */
 class RoboFile extends Brads\Robo\Tasks
 {
-	// Import the gears asset trait
-	use Gears\Asset;
-
 	/**
 	 * Pushes a new release to github, minifying automagically.
 	 */
@@ -233,3 +227,7 @@ class RoboFile extends Brads\Robo\Tasks
 		if (!$overall_pass_or_fail) throw new Exception('Some tests failed!');
 	}
 }
+
+// Initialise the runner
+$runner = new \Brads\Robo\Runner();
+$runner->execute('RoboFile');
