@@ -55,6 +55,8 @@ class RoboFile extends Brads\Robo\Tasks
 			->to('"version": "'.$next_version.'"')
 		->run();
 
+		$this->taskGitStack()->add('-A')->commit('bower version bump')->pull()->push()->run();
+
 		$this->taskExec('git tag '.$next_version)->run();
 
 		$this->taskExec('git push --tags')->run();
