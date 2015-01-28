@@ -12,11 +12,11 @@ require_once(__DIR__.'/vendor/autoload.php');
 class RoboFile extends Brads\Robo\Tasks
 {
 	/**
-	 * Pushes a new release to github, minifying automagically.
+	 * Pushes a new commit to github.
 	 */
-	public function release()
+	public function commit()
 	{
-		$this->yell('Publishing new release.');
+		echo "\n"; $this->yell('Building and pushing to github.'); echo "\n"; 
 
 		$this->taskCleanDir('./dist')->run();
 
@@ -26,17 +26,36 @@ class RoboFile extends Brads\Robo\Tasks
 
 		if ($this->askYesNo('Do you want to publish a new version?'))
 		{
-			$this->test();
-
-			$current_version = exec('git tag');
-			$parts = explode('.', $current_version);
-			$last = array_pop($parts);
-			$next_version = implode('.', $parts).'.'.($last+1);
-
-			$this->taskExec('git tag '.$this->askDefault('Please set the new version number.', $next_version))->run();
-
-			$this->taskExec('git push --tags')->run();
+			$this->release();
 		}
+	}
+
+	/**
+	 * Pushes a new release to github.
+	 */
+	public function release()
+	{
+		// This will throw an exception if the unit tests fail
+		// and thus halt execution of this task. 
+		$this->test();
+
+		echo "\n"; $this->yell('Publishing new release.'); echo "\n"; 
+
+		$current_version = exec('git tag');
+		$parts = explode('.', $current_version);
+		$last = array_pop($parts);
+		$next_version = implode('.', $parts).'.'.($last+1);
+		$next_version = Str::s($this->askDefault('Please set the new version number.', $next_version));
+		if ($next_version->startsWith('v')) $next_version = $next_version->slice(1);
+
+		$this->taskReplaceInFile('bower.json')
+			->regex('~"version": ".*"~')
+			->to('"version": "'.$next_version.'"')
+		->run();
+
+		$this->taskExec('git tag '.$next_version)->run();
+
+		$this->taskExec('git push --tags')->run();
 	}
 
 	/**
