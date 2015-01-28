@@ -4,6 +4,8 @@
 // Install Composer
 require_once(__DIR__.'/vendor/autoload.php');
 
+use Gears\String as Str;
+
 /**
  * This is project's console commands configuration for Robo task runner.
  *

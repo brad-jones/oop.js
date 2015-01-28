@@ -4,6 +4,7 @@
 		"codegyre/robo": "*",
 		"brad-jones/robo-tasks": "*",
 		"sauce/connect": "3.*",
-		"guzzlehttp/guzzle": "~5.0"
+		"guzzlehttp/guzzle": "~5.0",
+		"gears/string": "*"
 	}
 }
